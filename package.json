@@ -36,7 +36,7 @@
     "typescript-eslint": "^8.3.0"
   },
   "description": "",
-  "main": "eslint.config.js",
+  "main": "server.js",
   "keywords": [],
   "author": "",
   "license": "ISC"
