@@ -37,7 +37,7 @@ export const Header: React.FC<HeaderProps> = ({
             </span>
           </div>
 
-          <nav className="hidden md:flex space-x-8 font-main font-medium">
+          <nav className="hidden md:flex items-center space-x-6 font-main font-medium">
             <a
               href="#home"
               className={`hover:text-pink-500 transition-colors ${
@@ -54,14 +54,34 @@ export const Header: React.FC<HeaderProps> = ({
             >
               Create
             </a>
-            <a
-              href="#gallery"
-              className={`hover:text-pink-500 transition-colors ${
-                darkMode ? "text-gray-300" : "text-gray-600"
-              }`}
+            <button
+              onClick={onShowGallery}
+              disabled={!hasDesigns}
+              className={`flex items-center gap-2 px-4 py-2 rounded-full transition-all duration-300 ${
+                hasDesigns
+                  ? darkMode
+                    ? "bg-purple-600/80 hover:bg-purple-600 text-white backdrop-blur-sm"
+                    : "bg-pink-500/80 hover:bg-pink-500 text-white backdrop-blur-sm"
+                  : "opacity-50 cursor-not-allowed text-gray-400"
+              } hover-scale`}
+              title={
+                hasDesigns ? "Open Gallery" : "Create designs to view gallery"
+              }
             >
+              <GalleryVertical className="w-4 h-4" />
               Gallery
-            </a>
+              {hasDesigns && (
+                <span
+                  className={`ml-1 px-2 py-0.5 rounded-full text-xs font-semibold ${
+                    darkMode
+                      ? "bg-pink-400 text-purple-900"
+                      : "bg-purple-200 text-pink-700"
+                  }`}
+                >
+                  New
+                </span>
+              )}
+            </button>
             <a
               href="#about"
               className={`hover:text-pink-500 transition-colors ${
