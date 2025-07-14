@@ -57,7 +57,7 @@ export const Gallery: React.FC<GalleryProps> = ({
       // Use the new server endpoint for better download handling
       const BASE_URL =
         import.meta.env.MODE === "development"
-          ? "http://localhost:5013"
+          ? "http://localhost:3001"
           : "https://fashion-designer.onrender.com";
 
       const response = await fetch(`${BASE_URL}/api/download-image`, {

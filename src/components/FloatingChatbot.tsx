@@ -38,7 +38,7 @@ export const FloatingChatbot: React.FC<FloatingChatbotProps> = ({
 
   const BASE_URL =
     import.meta.env.MODE === "development"
-      ? "http://localhost:5013"
+      ? "http://localhost:3001"
       : "https://fashion-designer.onrender.com";
 
   const generateFashionImage = async (userPrompt: string) => {

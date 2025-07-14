@@ -10,7 +10,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 dotenv.config();
 const app = express();
-const PORT = process.env.PORT || 5013;
+const PORT = process.env.PORT || 3001;
 
 app.use(cors());
 app.use(express.json());
