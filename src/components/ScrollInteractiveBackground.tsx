@@ -91,47 +91,47 @@ export const ScrollInteractiveBackground: React.FC<
 
       {/* Animated gradient blobs */}
       <div className="absolute inset-0">
-        {/* Blob 1 */}
+        {/* Blob 1 - Sphere effect */}
         <div
-          className={`absolute rounded-full blur-3xl transition-all duration-2000 ease-out ${
-            darkMode ? "opacity-30" : "opacity-60"
+          className={`absolute rounded-full transition-all duration-2000 ease-out ${
+            darkMode ? "opacity-15 blur-[120px]" : "opacity-40 blur-[80px]"
           }`}
           style={{
-            width: "40vw",
-            height: "40vw",
-            background: `radial-gradient(circle, ${colors.secondary} 0%, transparent 70%)`,
-            left: `${20 + mouseX * 10}%`,
-            top: `${10 + scrollProgress * 20}%`,
+            width: "50vw",
+            height: "50vw",
+            background: `radial-gradient(circle, ${colors.secondary} 0%, ${colors.secondary}40 30%, ${colors.secondary}20 50%, transparent 100%)`,
+            left: `${15 + mouseX * 10}%`,
+            top: `${5 + scrollProgress * 20}%`,
             transform: `scale(${blob1Scale}) rotate(${scrollProgress * 360}deg)`,
           }}
         />
 
-        {/* Blob 2 */}
+        {/* Blob 2 - Sphere effect */}
         <div
-          className={`absolute rounded-full blur-2xl transition-all duration-3000 ease-out ${
-            darkMode ? "opacity-25" : "opacity-50"
+          className={`absolute rounded-full transition-all duration-3000 ease-out ${
+            darkMode ? "opacity-12 blur-[100px]" : "opacity-35 blur-[60px]"
           }`}
           style={{
-            width: "45vw",
-            height: "45vw",
-            background: `radial-gradient(circle, ${colors.primary} 0%, transparent 70%)`,
-            right: `${10 + mouseY * 15}%`,
-            top: `${30 + scrollProgress * 40}%`,
+            width: "55vw",
+            height: "55vw",
+            background: `radial-gradient(circle, ${colors.primary} 0%, ${colors.primary}50 25%, ${colors.primary}25 45%, transparent 100%)`,
+            right: `${5 + mouseY * 15}%`,
+            top: `${25 + scrollProgress * 40}%`,
             transform: `scale(${blob2Scale}) rotate(${-scrollProgress * 180}deg)`,
           }}
         />
 
-        {/* Blob 3 */}
+        {/* Blob 3 - Sphere effect */}
         <div
-          className={`absolute rounded-full blur-xl transition-all duration-2500 ease-out ${
-            darkMode ? "opacity-20" : "opacity-40"
+          className={`absolute rounded-full transition-all duration-2500 ease-out ${
+            darkMode ? "opacity-18 blur-[90px]" : "opacity-45 blur-[70px]"
           }`}
           style={{
-            width: "35vw",
-            height: "35vw",
-            background: `radial-gradient(circle, ${colors.tertiary} 0%, transparent 70%)`,
-            left: `${40 + mouseX * 20}%`,
-            bottom: `${20 + scrollProgress * 30}%`,
+            width: "40vw",
+            height: "40vw",
+            background: `radial-gradient(circle, ${colors.tertiary} 0%, ${colors.tertiary}60 20%, ${colors.tertiary}30 40%, transparent 100%)`,
+            left: `${35 + mouseX * 20}%`,
+            bottom: `${15 + scrollProgress * 30}%`,
             transform: `scale(${blob3Scale}) rotate(${scrollProgress * 90}deg)`,
           }}
         />
