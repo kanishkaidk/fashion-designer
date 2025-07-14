@@ -9,7 +9,7 @@ import { Footer } from './components/Footer';
 import { FloatingChatbot } from './components/FloatingChatbot';
 import { ParticleBackground } from './components/ParticleBackground';
 import { CursorTrail } from './components/CursorTrail';
-import { DesignHistoryModal } from './components/DesignHistoryModal';
+import { Gallery } from './components/Gallery';
 import { useDarkMode } from './hooks/useDarkMode';
 import { useDesignHistory } from './hooks/useDesignHistory';
 import './App.css';
@@ -26,7 +26,12 @@ export interface FashionDesign {
     length: string;
     mood: string;
     season: string;
-    accessory?: string;
+    accessories?: string[] | string;
+    upperWear?: string[];
+    lowerWear?: string[];
+    shoes?: string[];
+    headAccessories?: string[];
+    hairstyle?: string;
     description: string;
     story: string;
     stylingTip: string;
@@ -39,7 +44,7 @@ export interface FashionDesign {
 function App() {
   const [suggestions, setSuggestions] = useState<FashionDesign[]>([]);
   const [loading, setLoading] = useState(false);
-  const [showHistoryModal, setShowHistoryModal] = useState(false);
+  const [showGallery, setShowGallery] = useState(false);
   const { darkMode, toggleDarkMode } = useDarkMode();
   const { designHistory, addDesign } = useDesignHistory();
 
@@ -151,6 +156,12 @@ function App() {
             imageUrl: suggestion.imageUrl,
             specs: {
               ...suggestion.specs,
+              accessories: formData.accessories,
+              upperWear: formData.upperWear,
+              lowerWear: formData.lowerWear,
+              shoes: formData.shoes,
+              headAccessories: formData.headAccessories,
+              hairstyle: formData.hairstyle,
               stylingTip: generateStylingTip(formData.style, formData.fabric, formData.season),
               quirkyCaption: generateQuirkyCaption(formData.mood, formData.style)
             },
@@ -196,7 +207,7 @@ function App() {
           <OutputSection 
             designs={suggestions} 
             darkMode={darkMode}
-            onShowHistory={() => setShowHistoryModal(true)}
+            onShowHistory={() => setShowGallery(true)}
           />
         )}
         <FashionTipCarousel darkMode={darkMode} />
@@ -206,10 +217,10 @@ function App() {
       <Footer darkMode={darkMode} />
       <FloatingChatbot darkMode={darkMode} />
       
-      {showHistoryModal && (
-        <DesignHistoryModal
+      {showGallery && (
+        <Gallery
           designs={designHistory}
-          onClose={() => setShowHistoryModal(false)}
+          onClose={() => setShowGallery(false)}
           darkMode={darkMode}
         />
       )}

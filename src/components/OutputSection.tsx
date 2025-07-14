@@ -1,5 +1,5 @@
 import React from 'react';
-import { Download, ExternalLink, History, Crown } from 'lucide-react';
+import { Download, ExternalLink, History, Crown, Gallery as GalleryIcon } from 'lucide-react';
 import { FashionDesign } from '../App';
 
 interface OutputSectionProps {
@@ -97,8 +97,8 @@ export const OutputSection: React.FC<OutputSectionProps> = ({
                 : 'bg-pink-500 hover:bg-pink-600 text-white'
             }`}
           >
-            <History className="w-4 h-4" />
-            View Design History
+            <GalleryIcon className="w-4 h-4" />
+            ✨ Open Gallery
           </button>
         </div>
 
@@ -158,8 +158,13 @@ export const OutputSection: React.FC<OutputSectionProps> = ({
                   <span className="tag-pill bg-blue-100 text-blue-800">{design.specs.length}</span>
                   <span className="tag-pill bg-green-100 text-green-800">{design.specs.season}</span>
                   <span className="tag-pill bg-yellow-100 text-yellow-800">{design.specs.modelSize}</span>
-                  {design.specs.accessory && (
-                    <span className="tag-pill bg-gray-100 text-gray-800">{design.specs.accessory}</span>
+                  {design.specs.accessories && design.specs.accessories.length > 0 && (
+                    <span className="tag-pill bg-gray-100 text-gray-800">
+                      {Array.isArray(design.specs.accessories) 
+                        ? design.specs.accessories.slice(0, 2).join(', ') + (design.specs.accessories.length > 2 ? '...' : '')
+                        : design.specs.accessories
+                      }
+                    </span>
                   )}
                 </div>
 
@@ -178,6 +183,28 @@ export const OutputSection: React.FC<OutputSectionProps> = ({
                 <div className={`p-4 rounded-2xl ${
                   darkMode ? 'bg-purple-900/30' : 'bg-pink-50'
                 }`}>
+                  <div className="space-y-2 mb-3">
+                    {design.specs.upperWear && design.specs.upperWear.length > 0 && (
+                      <p className={`font-main text-sm ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                        <strong className={darkMode ? 'text-pink-300' : 'text-pink-600'}>Upper:</strong> {design.specs.upperWear.join(', ')}
+                      </p>
+                    )}
+                    {design.specs.lowerWear && design.specs.lowerWear.length > 0 && (
+                      <p className={`font-main text-sm ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                        <strong className={darkMode ? 'text-pink-300' : 'text-pink-600'}>Lower:</strong> {design.specs.lowerWear.join(', ')}
+                      </p>
+                    )}
+                    {design.specs.shoes && design.specs.shoes.length > 0 && (
+                      <p className={`font-main text-sm ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                        <strong className={darkMode ? 'text-pink-300' : 'text-pink-600'}>Shoes:</strong> {design.specs.shoes.join(', ')}
+                      </p>
+                    )}
+                    {design.specs.hairstyle && (
+                      <p className={`font-main text-sm ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                        <strong className={darkMode ? 'text-pink-300' : 'text-pink-600'}>Hair:</strong> {design.specs.hairstyle}
+                      </p>
+                    )}
+                  </div>
                   <p className={`font-main text-sm font-semibold mb-2 ${
                     darkMode ? 'text-pink-300' : 'text-pink-600'
                   }`}>
@@ -198,7 +225,7 @@ export const OutputSection: React.FC<OutputSectionProps> = ({
                       : 'bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white'
                   }`}
                 >
-                  Copy Description
+                  ✨ Copy Description
                 </button>
               </div>
             </div>
