@@ -1,5 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { ChevronDown, X, Plus } from 'lucide-react';
+import React, { useState, useRef, useEffect } from "react";
+import { ChevronDown, X, Plus } from "lucide-react";
 
 interface Option {
   value: string;
@@ -25,53 +25,57 @@ export const MultiSelectDropdown: React.FC<MultiSelectDropdownProps> = ({
   label,
   darkMode,
   allowCustom = true,
-  maxHeight = "200px"
+  maxHeight = "200px",
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [customInput, setCustomInput] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
+  const [customInput, setCustomInput] = useState("");
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const filteredOptions = options.filter(option =>
-    option.toLowerCase().includes(searchTerm.toLowerCase()) &&
-    !value.includes(option)
+  const filteredOptions = options.filter(
+    (option) =>
+      option.toLowerCase().includes(searchTerm.toLowerCase()) &&
+      !value.includes(option),
   );
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
         setIsOpen(false);
-        setSearchTerm('');
-        setCustomInput('');
+        setSearchTerm("");
+        setCustomInput("");
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   const handleSelect = (option: string) => {
     if (!value.includes(option)) {
       onChange([...value, option]);
     }
-    setSearchTerm('');
+    setSearchTerm("");
   };
 
   const handleRemove = (option: string) => {
-    onChange(value.filter(v => v !== option));
+    onChange(value.filter((v) => v !== option));
   };
 
   const handleAddCustom = () => {
     const trimmed = customInput.trim();
     if (trimmed && !value.includes(trimmed)) {
       onChange([...value, trimmed]);
-      setCustomInput('');
-      setSearchTerm('');
+      setCustomInput("");
+      setSearchTerm("");
     }
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       e.preventDefault();
       if (customInput.trim()) {
         handleAddCustom();
@@ -83,15 +87,17 @@ export const MultiSelectDropdown: React.FC<MultiSelectDropdownProps> = ({
 
   return (
     <div className="relative" ref={dropdownRef}>
-      <label className={`font-main block text-sm font-semibold mb-2 ${
-        darkMode ? 'text-gray-200' : 'text-gray-700'
-      }`}>
+      <label
+        className={`font-main block text-sm font-semibold mb-2 ${
+          darkMode ? "text-gray-200" : "text-gray-700"
+        }`}
+      >
         {label}
       </label>
 
       <div
         className={`magic-input w-full p-3 rounded-xl border-0 cursor-pointer min-h-[48px] ${
-          darkMode ? 'text-white bg-gray-800/50' : 'text-gray-800 bg-white/80'
+          darkMode ? "text-white bg-gray-800/50" : "text-gray-800 bg-white/80"
         }`}
         onClick={() => setIsOpen(!isOpen)}
       >
@@ -117,32 +123,40 @@ export const MultiSelectDropdown: React.FC<MultiSelectDropdownProps> = ({
         </div>
 
         <div className="flex items-center justify-between">
-          <span className={`${
-            value.length === 0 
-              ? (darkMode ? 'text-gray-400' : 'text-gray-500') 
-              : 'text-transparent'
-          } font-main`}>
-            {value.length === 0 ? placeholder : ''}
+          <span
+            className={`${
+              value.length === 0
+                ? darkMode
+                  ? "text-gray-400"
+                  : "text-gray-500"
+                : "text-transparent"
+            } font-main`}
+          >
+            {value.length === 0 ? placeholder : ""}
           </span>
-          <ChevronDown className={`w-4 h-4 transition-transform ${
-            isOpen ? 'rotate-180' : ''
-          } ${darkMode ? 'text-gray-400' : 'text-gray-500'}`} />
+          <ChevronDown
+            className={`w-4 h-4 transition-transform ${
+              isOpen ? "rotate-180" : ""
+            } ${darkMode ? "text-gray-400" : "text-gray-500"}`}
+          />
         </div>
       </div>
 
       {isOpen && (
-        <div className={`absolute z-50 w-full mt-1 rounded-xl shadow-2xl border ${
-          darkMode 
-            ? 'bg-gray-800 border-gray-600' 
-            : 'bg-white border-gray-200'
-        } max-h-80 overflow-hidden`}>
+        <div
+          className={`absolute z-50 w-full mt-1 rounded-xl shadow-2xl border ${
+            darkMode
+              ? "bg-gray-800 border-gray-600"
+              : "bg-white border-gray-200"
+          } max-h-80 overflow-hidden`}
+        >
           <div className="p-3 border-b border-gray-200 dark:border-gray-600">
             <input
               type="text"
               className={`w-full p-2 rounded-lg border-0 outline-none font-main ${
-                darkMode 
-                  ? 'bg-gray-700 text-white placeholder-gray-400' 
-                  : 'bg-gray-50 text-gray-800 placeholder-gray-500'
+                darkMode
+                  ? "bg-gray-700 text-white placeholder-gray-400"
+                  : "bg-gray-50 text-gray-800 placeholder-gray-500"
               }`}
               placeholder="Search or add custom..."
               value={searchTerm || customInput}
@@ -168,9 +182,11 @@ export const MultiSelectDropdown: React.FC<MultiSelectDropdownProps> = ({
 
           <div className="max-h-52 overflow-y-auto scrollbar-thin scrollbar-thumb-pink-300 scrollbar-track-gray-100">
             {filteredOptions.length === 0 && !customInput ? (
-              <div className={`p-3 text-center ${
-                darkMode ? 'text-gray-400' : 'text-gray-500'
-              } font-main`}>
+              <div
+                className={`p-3 text-center ${
+                  darkMode ? "text-gray-400" : "text-gray-500"
+                } font-main`}
+              >
                 No options available
               </div>
             ) : (
@@ -178,10 +194,12 @@ export const MultiSelectDropdown: React.FC<MultiSelectDropdownProps> = ({
                 <button
                   key={index}
                   type="button"
-                  className={`w-full text-left p-3 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors font-main ${
-                    darkMode ? 'text-white' : 'text-gray-800'
+                  className={`w-full text-left p-3 transition-colors font-main ${
+                    darkMode
+                      ? "text-white hover:bg-gray-700"
+                      : "text-gray-800 hover:bg-gray-50"
                   } hover:border-l-4 ${
-                    darkMode ? 'hover:border-pink-400' : 'hover:border-pink-500'
+                    darkMode ? "hover:border-pink-400" : "hover:border-pink-500"
                   } transition-all`}
                   onClick={() => handleSelect(option)}
                 >
