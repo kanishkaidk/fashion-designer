@@ -8,7 +8,12 @@ interface HeaderProps {
   hasDesigns: boolean;
 }
 
-export const Header: React.FC<HeaderProps> = ({ darkMode, toggleDarkMode }) => {
+export const Header: React.FC<HeaderProps> = ({
+  darkMode,
+  toggleDarkMode,
+  onShowGallery,
+  hasDesigns,
+}) => {
   return (
     <header
       className={`fixed top-0 w-full z-50 transition-all duration-500 ${
