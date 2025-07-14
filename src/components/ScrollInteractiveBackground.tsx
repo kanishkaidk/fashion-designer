@@ -109,7 +109,7 @@ export const ScrollInteractiveBackground: React.FC<
         {/* Blob 2 - Sphere effect */}
         <div
           className={`absolute rounded-full transition-all duration-3000 ease-out ${
-            darkMode ? "opacity-12 blur-[100px]" : "opacity-35 blur-[60px]"
+            darkMode ? "opacity-20 blur-[100px]" : "opacity-35 blur-[60px]"
           }`}
           style={{
             width: "55vw",
