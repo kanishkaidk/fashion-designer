@@ -367,9 +367,7 @@ app.post("/api/generate", async (req, res) => {
           prompt: fullPrompt,
           n: 1,
           size: "1024x1024",
-          model: "dall-e-3",
-          quality: "standard",
-          style: "vivid",
+          model: "dall-e-2"
         }),
       },
     );
