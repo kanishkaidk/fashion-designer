@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { Palette, Shirt, Wand2, X, Plus } from 'lucide-react';
+import { Palette, Wand2 } from 'lucide-react';
+import { MultiSelectDropdown } from './MultiSelectDropdown';
+import { SingleSelectDropdown } from './SingleSelectDropdown';
 
 interface PromptInputSectionProps {
   onGenerate: (formData: any) => void;
@@ -14,7 +16,7 @@ export const PromptInputSection: React.FC<PromptInputSectionProps> = ({
 }) => {
   const [prompt, setPrompt] = useState('');
   const [style, setStyle] = useState('');
-  const [fabric, setFabric] = useState('');
+  const [fabrics, setFabrics] = useState<string[]>([]);
   const [colorTheme, setColorTheme] = useState('');
   const [mainColor, setMainColor] = useState('#ec4899');
   const [modelSize, setModelSize] = useState('');
@@ -22,13 +24,17 @@ export const PromptInputSection: React.FC<PromptInputSectionProps> = ({
   const [mood, setMood] = useState('');
   const [season, setSeason] = useState('');
   const [accessories, setAccessories] = useState<string[]>([]);
-  const [accessoryInput, setAccessoryInput] = useState('');
   const [targetAudience, setTargetAudience] = useState('');
   const [occasion, setOccasion] = useState('');
   const [graphicPrint, setGraphicPrint] = useState('');
   const [pattern, setPattern] = useState('');
-  const [outfitComponents, setOutfitComponents] = useState<string[]>([]);
-  const [componentInput, setComponentInput] = useState('');
+  
+  // New fields
+  const [upperWear, setUpperWear] = useState<string[]>([]);
+  const [lowerWear, setLowerWear] = useState<string[]>([]);
+  const [shoes, setShoes] = useState<string[]>([]);
+  const [headAccessories, setHeadAccessories] = useState<string[]>([]);
+  const [hairstyle, setHairstyle] = useState('');
 
   // Enhanced dropdown options with more variety
   const styleOptions = [
@@ -91,32 +97,42 @@ export const PromptInputSection: React.FC<PromptInputSectionProps> = ({
     'Laser Cut', 'Perforated', 'Textured', 'Woven', 'Knitted', 'Crocheted'
   ];
 
-  const outfitComponentOptions = [
-    'Upper/Top', 'Bottom', 'Footwear', 'Jacket/Outerwear', 'Dress', 'Accessories',
-    'Undergarments', 'Headwear', 'Gloves', 'Belt', 'Scarf', 'Jewelry'
+  const upperWearOptions = [
+    'T-Shirt', 'Blouse', 'Shirt', 'Tank Top', 'Crop Top', 'Sweater', 'Hoodie', 
+    'Blazer', 'Jacket', 'Cardigan', 'Vest', 'Tunic', 'Bodysuit', 'Camisole',
+    'Off-Shoulder Top', 'Halter Top', 'Peplum Top', 'Wrap Top', 'Button-Down'
   ];
 
-  const addAccessory = () => {
-    if (accessoryInput.trim() && !accessories.includes(accessoryInput.trim())) {
-      setAccessories([...accessories, accessoryInput.trim()]);
-      setAccessoryInput('');
-    }
-  };
+  const lowerWearOptions = [
+    'Jeans', 'Trousers', 'Shorts', 'Skirt', 'Leggings', 'Palazzo', 'Culottes',
+    'Pencil Skirt', 'A-Line Skirt', 'Maxi Skirt', 'Mini Skirt', 'Cargo Pants',
+    'Wide-Leg Pants', 'Skinny Jeans', 'Bootcut Jeans', 'High-Waisted Pants'
+  ];
 
-  const removeAccessory = (accessory: string) => {
-    setAccessories(accessories.filter(a => a !== accessory));
-  };
+  const shoesOptions = [
+    'Sneakers', 'Heels', 'Flats', 'Boots', 'Sandals', 'Loafers', 'Pumps',
+    'Ankle Boots', 'Knee-High Boots', 'Platform Shoes', 'Wedges', 'Oxfords',
+    'Ballet Flats', 'Stilettos', 'Block Heels', 'Combat Boots', 'Chelsea Boots'
+  ];
 
-  const addOutfitComponent = () => {
-    if (componentInput.trim() && !outfitComponents.includes(componentInput.trim())) {
-      setOutfitComponents([...outfitComponents, componentInput.trim()]);
-      setComponentInput('');
-    }
-  };
+  const headAccessoriesOptions = [
+    'Hat', 'Cap', 'Beanie', 'Headband', 'Hair Clip', 'Scarf', 'Bandana',
+    'Beret', 'Fedora', 'Sun Hat', 'Baseball Cap', 'Bucket Hat', 'Turban',
+    'Hair Bow', 'Tiara', 'Hair Pins', 'Headwrap'
+  ];
 
-  const removeOutfitComponent = (component: string) => {
-    setOutfitComponents(outfitComponents.filter(c => c !== component));
-  };
+  const accessoryOptions = [
+    'Necklace', 'Earrings', 'Bracelet', 'Ring', 'Watch', 'Belt', 'Bag',
+    'Purse', 'Backpack', 'Sunglasses', 'Scarf', 'Gloves', 'Brooch',
+    'Anklet', 'Hair Accessories', 'Phone Case', 'Wallet'
+  ];
+
+  const hairstyleOptions = [
+    'Long & Straight', 'Wavy', 'Curly', 'Bob Cut', 'Pixie Cut', 'Updo',
+    'Ponytail', 'Braids', 'Bun', 'Beach Waves', 'Sleek & Straight',
+    'Messy Bun', 'Side Braid', 'Top Knot', 'Half-Up Half-Down', 'Bangs',
+    'Layered', 'Shag', 'Lob (Long Bob)', 'Afro', 'Dreadlocks', 'Cornrows'
+  ];
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -125,7 +141,7 @@ export const PromptInputSection: React.FC<PromptInputSectionProps> = ({
     onGenerate({
       prompt,
       style,
-      fabric,
+      fabric: fabrics.join(', ') || 'Mixed fabrics',
       colorTheme,
       mainColor,
       modelSize,
@@ -137,107 +153,13 @@ export const PromptInputSection: React.FC<PromptInputSectionProps> = ({
       occasion,
       graphicPrint,
       pattern,
-      outfitComponents
+      upperWear,
+      lowerWear,
+      shoes,
+      headAccessories,
+      hairstyle
     });
   };
-
-  const CustomSelect: React.FC<{
-    value: string;
-    onChange: (value: string) => void;
-    options: string[];
-    placeholder: string;
-    label: string;
-    icon?: string;
-  }> = ({ value, onChange, options, placeholder, label, icon }) => (
-    <div>
-      <label className={`font-main block text-sm font-semibold mb-2 ${
-        darkMode ? 'text-gray-200' : 'text-gray-700'
-      }`}>
-        {icon && <span className="mr-1">{icon}</span>}
-        {label}
-      </label>
-      <input
-        list={`${label.replace(/\s+/g, '')}-options`}
-        className={`magic-input w-full p-3 rounded-xl border-0 font-main ${
-          darkMode ? 'text-white bg-gray-800/50' : 'text-gray-800 bg-white/80'
-        }`}
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        placeholder={placeholder}
-      />
-      <datalist id={`${label.replace(/\s+/g, '')}-options`}>
-        {options.map(option => (
-          <option key={option} value={option} />
-        ))}
-      </datalist>
-    </div>
-  );
-
-  const TagInput: React.FC<{
-    tags: string[];
-    onAdd: () => void;
-    onRemove: (tag: string) => void;
-    inputValue: string;
-    onInputChange: (value: string) => void;
-    placeholder: string;
-    label: string;
-    options?: string[];
-  }> = ({ tags, onAdd, onRemove, inputValue, onInputChange, placeholder, label, options = [] }) => (
-    <div>
-      <label className={`font-main block text-sm font-semibold mb-2 ${
-        darkMode ? 'text-gray-200' : 'text-gray-700'
-      }`}>
-        {label}
-      </label>
-      <div className={`magic-input rounded-xl p-3 min-h-[48px] ${
-        darkMode ? 'bg-gray-800/50' : 'bg-white/80'
-      }`}>
-        <div className="flex flex-wrap gap-2 mb-2">
-          {tags.map((tag, index) => (
-            <span
-              key={index}
-              className="inline-flex items-center gap-1 px-3 py-1 bg-pink-500 text-white rounded-full text-sm font-main"
-            >
-              {tag}
-              <button
-                type="button"
-                onClick={() => onRemove(tag)}
-                className="hover:bg-pink-600 rounded-full p-0.5"
-              >
-                <X className="w-3 h-3" />
-              </button>
-            </span>
-          ))}
-        </div>
-        <div className="flex gap-2">
-          <input
-            list={`${label.replace(/\s+/g, '')}-options`}
-            className={`flex-1 bg-transparent border-0 outline-none font-main ${
-              darkMode ? 'text-white placeholder-gray-400' : 'text-gray-800 placeholder-gray-500'
-            }`}
-            value={inputValue}
-            onChange={(e) => onInputChange(e.target.value)}
-            placeholder={placeholder}
-            onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), onAdd())}
-          />
-          <button
-            type="button"
-            onClick={onAdd}
-            className="p-1 text-pink-500 hover:text-pink-600"
-          >
-            <Plus className="w-4 h-4" />
-          </button>
-        </div>
-        {options.length > 0 && (
-          <datalist id={`${label.replace(/\s+/g, '')}-options`}>
-            {options.map(option => (
-              <option key={option} value={option} />
-            ))}
-          </datalist>
-        )}
-      </div>
-    </div>
-  );
 
   return (
     <section id="create" className="py-20 px-4">
@@ -249,10 +171,10 @@ export const PromptInputSection: React.FC<PromptInputSectionProps> = ({
           <h2 className={`font-title font-bold text-3xl md:text-4xl mb-4 ${
             darkMode ? 'text-white' : 'text-gray-800'
           } tracking-wide`}>
-            Describe Your Dream Design
+            ✨ Describe Your Dream Design
           </h2>
           <p className={`font-main text-lg font-medium ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-            Cast your fashion spell and watch AI bring your vision to life
+            Cast your fashion spell and watch AI weave magic ✨
           </p>
         </div>
 
@@ -267,10 +189,10 @@ export const PromptInputSection: React.FC<PromptInputSectionProps> = ({
             <label className={`font-main block text-sm font-semibold mb-3 ${
               darkMode ? 'text-gray-200' : 'text-gray-700'
             }`}>
-              Describe your magical fashion idea <span className="text-pink-500">*</span>
+              ✨ Describe your magical fashion vision <span className="text-pink-500">*</span>
             </label>
             <textarea
-              placeholder="A flowy summer dress with ethereal floral patterns that dance in the moonlight..."
+              placeholder="A dreamy evening gown that sparkles like stardust, with flowing fabric that catches moonlight and makes me feel like a goddess walking through an enchanted garden..."
               className={`magic-input w-full p-4 rounded-2xl border-0 resize-none h-24 font-main ${
                 darkMode ? 'text-white bg-gray-800/50 placeholder-gray-400' : 'text-gray-800 bg-white/80 placeholder-gray-500'
               }`}
@@ -280,40 +202,66 @@ export const PromptInputSection: React.FC<PromptInputSectionProps> = ({
             />
           </div>
 
-          {/* Basic Details Grid */}
+          {/* Essential Details - Required Fields */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-            <CustomSelect
+            <SingleSelectDropdown
               value={style}
               onChange={setStyle}
               options={styleOptions}
-              placeholder="Choose your vibe..."
-              label="Style"
-              icon="👗"
+              placeholder="What's your style vibe?"
+              label="✨ Style"
+              darkMode={darkMode}
+              required={true}
             />
 
-            <CustomSelect
-              value={fabric}
-              onChange={setFabric}
+            <SingleSelectDropdown
+              value={mood}
+              onChange={setMood}
+              options={moods}
+              placeholder="What energy are you channeling?"
+              label="💫 Mood"
+              darkMode={darkMode}
+              required={true}
+            />
+
+            <SingleSelectDropdown
+              value={season}
+              onChange={setSeason}
+              options={seasons}
+              placeholder="When will you slay?"
+              label="🌸 Season"
+              darkMode={darkMode}
+            />
+          </div>
+
+          {/* Fabric & Materials */}
+          <div className="mb-8">
+            <MultiSelectDropdown
+              value={fabrics}
+              onChange={setFabrics}
               options={fabricOptions}
-              placeholder="Select material..."
-              label="Fabric"
-              icon="🧵"
+              placeholder="Choose your dream fabrics..."
+              label="🧵 Fabrics & Materials"
+              darkMode={darkMode}
             />
+          </div>
 
-            <CustomSelect
+          {/* Color & Theme */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <SingleSelectDropdown
               value={colorTheme}
               onChange={setColorTheme}
               options={colorThemes}
-              placeholder="Pick your palette..."
-              label="Color Theme"
-              icon="🎨"
+              placeholder="What's your color story?"
+              label="🎨 Color Theme"
+              darkMode={darkMode}
             />
 
             <div>
               <label className={`font-main block text-sm font-semibold mb-2 ${
                 darkMode ? 'text-gray-200' : 'text-gray-700'
               }`}>
-                Main Color
+                💎 Main Color
               </label>
               <div className="flex items-center space-x-3">
                 <input 
@@ -329,108 +277,135 @@ export const PromptInputSection: React.FC<PromptInputSectionProps> = ({
                 </span>
               </div>
             </div>
+          </div>
 
-            <CustomSelect
+          {/* Size & Fit */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <SingleSelectDropdown
               value={modelSize}
               onChange={setModelSize}
               options={modelSizes}
-              placeholder="Choose size..."
-              label="Size"
-              icon="📏"
+              placeholder="What size fits perfectly?"
+              label="📏 Size"
+              darkMode={darkMode}
             />
 
-            <CustomSelect
+            <SingleSelectDropdown
               value={length}
               onChange={setLength}
               options={lengths}
-              placeholder="Select length..."
-              label="Length"
-              icon="📐"
+              placeholder="How long should it be?"
+              label="📐 Length"
+              darkMode={darkMode}
             />
           </div>
 
-          {/* Mood & Context Grid */}
+          {/* Occasion & Context */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            <CustomSelect
-              value={mood}
-              onChange={setMood}
-              options={moods}
-              placeholder="What's the vibe?"
-              label="Mood"
-              icon="💫"
-            />
-
-            <CustomSelect
-              value={season}
-              onChange={setSeason}
-              options={seasons}
-              placeholder="When to wear?"
-              label="Season"
-              icon="🌸"
-            />
-
-            <CustomSelect
+            <SingleSelectDropdown
               value={targetAudience}
               onChange={setTargetAudience}
               options={targetAudienceOptions}
-              placeholder="Who's it for?"
-              label="Target Audience"
-              icon="👥"
+              placeholder="Who's going to slay in this?"
+              label="👥 Target Audience"
+              darkMode={darkMode}
             />
 
-            <CustomSelect
+            <SingleSelectDropdown
               value={occasion}
               onChange={setOccasion}
               options={occasionOptions}
-              placeholder="What's the event?"
-              label="Occasion"
-              icon="🎉"
+              placeholder="Where will you wear this?"
+              label="🎉 Occasion"
+              darkMode={darkMode}
             />
-          </div>
 
-          {/* Design Details Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-            <CustomSelect
+            <SingleSelectDropdown
               value={graphicPrint}
               onChange={setGraphicPrint}
               options={graphicPrintOptions}
-              placeholder="Choose print style..."
-              label="Graphic Print"
-              icon="🖼️"
+              placeholder="Any cool prints?"
+              label="🖼️ Graphics & Prints"
+              darkMode={darkMode}
             />
 
-            <CustomSelect
+            <SingleSelectDropdown
               value={pattern}
               onChange={setPattern}
               options={patternOptions}
-              placeholder="Select pattern..."
-              label="Pattern Details"
-              icon="✨"
+              placeholder="What pattern speaks to you?"
+              label="✨ Pattern Details"
+              darkMode={darkMode}
             />
           </div>
 
-          {/* Tag Inputs Grid */}
+          {/* Outfit Components */}
+          <div className="space-y-6 mb-8">
+            <h3 className={`font-main font-bold text-lg ${
+              darkMode ? 'text-white' : 'text-gray-800'
+            }`}>
+              👔 Outfit Components (Optional but fun!)
+            </h3>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <MultiSelectDropdown
+                value={upperWear}
+                onChange={setUpperWear}
+                options={upperWearOptions}
+                placeholder="What's on top?"
+                label="👕 Upper Wear"
+                darkMode={darkMode}
+              />
+
+              <MultiSelectDropdown
+                value={lowerWear}
+                onChange={setLowerWear}
+                options={lowerWearOptions}
+                placeholder="What's on the bottom?"
+                label="👖 Lower Wear"
+                darkMode={darkMode}
+              />
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <MultiSelectDropdown
+                value={shoes}
+                onChange={setShoes}
+                options={shoesOptions}
+                placeholder="Step into style..."
+                label="👠 Shoes"
+                darkMode={darkMode}
+              />
+
+              <MultiSelectDropdown
+                value={headAccessories}
+                onChange={setHeadAccessories}
+                options={headAccessoriesOptions}
+                placeholder="Crown your look..."
+                label="👑 Head Accessories"
+                darkMode={darkMode}
+              />
+            </div>
+          </div>
+
+          {/* Accessories & Styling */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-            <TagInput
-              tags={accessories}
-              onAdd={addAccessory}
-              onRemove={removeAccessory}
-              inputValue={accessoryInput}
-              onInputChange={setAccessoryInput}
-              placeholder="Add accessories..."
-              label="💎 Accessories"
-              options={['Belt', 'Scarf', 'Hat', 'Jewelry', 'Bag', 'Shoes', 'Sunglasses', 'Watch', 'Earrings', 'Necklace', 'Bracelet', 'Ring']}
+            <MultiSelectDropdown
+              value={accessories}
+              onChange={setAccessories}
+              options={accessoryOptions}
+              placeholder="Add some sparkle..."
+              label="💎 Accessories & Jewelry"
+              darkMode={darkMode}
             />
 
-            <TagInput
-              tags={outfitComponents}
-              onAdd={addOutfitComponent}
-              onRemove={removeOutfitComponent}
-              inputValue={componentInput}
-              onInputChange={setComponentInput}
-              placeholder="Add outfit parts..."
-              label="👔 Outfit Components"
-              options={outfitComponentOptions}
+            <SingleSelectDropdown
+              value={hairstyle}
+              onChange={setHairstyle}
+              options={hairstyleOptions}
+              placeholder="How should the hair flow?"
+              label="💇‍♀️ Hairstyle Suggestion"
+              darkMode={darkMode}
             />
           </div>
 
@@ -447,12 +422,12 @@ export const PromptInputSection: React.FC<PromptInputSectionProps> = ({
                     <div className="typing-dot"></div>
                     <div className="typing-dot"></div>
                   </div>
-                  Weaving magic...
+                  ✨ Weaving your fashion magic...
                 </span>
               ) : (
                 <span className="flex items-center gap-2">
                   <Wand2 className="w-5 h-5 group-hover:animate-spin" />
-                  Generate My Design
+                  ✨ Generate My Dream Design
                 </span>
               )}
             </button>

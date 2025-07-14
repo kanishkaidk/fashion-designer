@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Wand2 } from 'lucide-react';
+import { WingLogo } from './WingLogo';
 
 interface HeroSectionProps {
   darkMode: boolean;
@@ -40,17 +40,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ darkMode }) => {
       <div className="text-center z-10 max-w-4xl mx-auto px-4">
         <div className="animate-float mb-8">
           <div className="flex justify-center mb-6">
-            <div className={`p-4 rounded-full ${
-              darkMode 
-                ? 'bg-gradient-to-r from-pink-500 to-purple-500' 
-                : 'bg-gradient-to-r from-pink-400 to-purple-400'
-            } animate-pulse-slow`}>
-              <Wand2 className="w-12 h-12 text-white" />
-            </div>
+            <WingLogo darkMode={darkMode} size={120} />
           </div>
           
            {/* Typing + Fade-in Title */}
-          <h1 className={`font-title font-bold text-4xl md:text-6xl lg:text-7xl mb-6 ${
+          <h1 className={`font-title font-bold text-3xl md:text-5xl lg:text-6xl mb-6 ${
             darkMode ? 'text-white' : 'text-gray-800'
           } tracking-wide text-center leading-tight`}>
             <span
@@ -61,7 +55,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ darkMode }) => {
             </span>
             <br />
             {showWithAI && (
-              <span className={`block mt-2 animate-blur-clear ${
+              <span className={`block mt-3 animate-blur-clear ${
                 darkMode ? 'text-pink-400' : 'text-purple-600'
               }`}>
                 with AI
@@ -88,8 +82,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ darkMode }) => {
             className="neon-button px-8 py-4 rounded-full text-lg font-semibold ripple hover-scale group"
           >
             <span className="flex items-center gap-2 font-main">
-              <Wand2 className="w-5 h-5 group-hover:animate-spin" />
-              Start Creating
+              ✨ Start Creating Magic
             </span>
           </button>
           
@@ -98,7 +91,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ darkMode }) => {
               ? 'border-pink-400 text-pink-400 hover:bg-pink-400 hover:text-gray-900' 
               : 'border-pink-500 text-pink-500 hover:bg-pink-500 hover:text-white'
           }`}>
-            View Gallery
+            ✨ View Gallery
           </button>
         </div>
         
