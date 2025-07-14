@@ -1,5 +1,5 @@
 import React from 'react';
-import { Download, ExternalLink, History, Crown, Gallery as GalleryIcon } from 'lucide-react';
+import { Download, ExternalLink, History, Crown, GalleryVertical as GalleryIcon } from 'lucide-react';
 import { FashionDesign } from '../App';
 
 interface OutputSectionProps {
