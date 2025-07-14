@@ -46,18 +46,20 @@ export const ScrollInteractiveBackground: React.FC<
   // Dynamic gradient colors based on scroll and theme
   const getGradientColors = () => {
     if (darkMode) {
+      // Subtle, dark mode colors - much less intense
       return {
-        primary: `hsl(${280 + hueRotation}, ${saturation * 70}%, ${brightness * 25}%)`,
-        secondary: `hsl(${320 + hueRotation}, ${saturation * 80}%, ${brightness * 35}%)`,
-        tertiary: `hsl(${240 + hueRotation}, ${saturation * 60}%, ${brightness * 20}%)`,
-        accent: `hsl(${300 + hueRotation}, ${saturation * 90}%, ${brightness * 15}%)`,
+        primary: `hsl(${280 + hueRotation}, ${saturation * 30}%, ${brightness * 8}%)`,
+        secondary: `hsl(${320 + hueRotation}, ${saturation * 25}%, ${brightness * 12}%)`,
+        tertiary: `hsl(${240 + hueRotation}, ${saturation * 35}%, ${brightness * 6}%)`,
+        accent: `hsl(${300 + hueRotation}, ${saturation * 20}%, ${brightness * 10}%)`,
       };
     } else {
+      // Brighter, more vibrant light mode colors
       return {
-        primary: `hsl(${320 + hueRotation}, ${saturation * 40}%, ${85 + brightness * 10}%)`,
-        secondary: `hsl(${280 + hueRotation}, ${saturation * 50}%, ${90 + brightness * 5}%)`,
-        tertiary: `hsl(${340 + hueRotation}, ${saturation * 30}%, ${95 + brightness * 3}%)`,
-        accent: `hsl(${260 + hueRotation}, ${saturation * 60}%, ${80 + brightness * 15}%)`,
+        primary: `hsl(${320 + hueRotation}, ${saturation * 60}%, ${75 + brightness * 15}%)`,
+        secondary: `hsl(${280 + hueRotation}, ${saturation * 70}%, ${80 + brightness * 10}%)`,
+        tertiary: `hsl(${340 + hueRotation}, ${saturation * 50}%, ${85 + brightness * 8}%)`,
+        accent: `hsl(${260 + hueRotation}, ${saturation * 80}%, ${70 + brightness * 20}%)`,
       };
     }
   };
