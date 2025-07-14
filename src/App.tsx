@@ -129,7 +129,12 @@ function App() {
             length: formData.length,
             mood: formData.mood,
             season: formData.season,
-            accessory: formData.accessory
+            accessories: formData.accessories,
+            targetAudience: formData.targetAudience,
+            occasion: formData.occasion,
+            graphicPrint: formData.graphicPrint,
+            pattern: formData.pattern,
+            outfitComponents: formData.outfitComponents
           }),
         });
         
