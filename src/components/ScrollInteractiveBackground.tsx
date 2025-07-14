@@ -91,7 +91,9 @@ export const ScrollInteractiveBackground: React.FC<
       <div className="absolute inset-0">
         {/* Blob 1 */}
         <div
-          className="absolute rounded-full opacity-30 blur-3xl transition-all duration-2000 ease-out"
+          className={`absolute rounded-full blur-3xl transition-all duration-2000 ease-out ${
+            darkMode ? "opacity-30" : "opacity-60"
+          }`}
           style={{
             width: "40vw",
             height: "40vw",
@@ -104,11 +106,13 @@ export const ScrollInteractiveBackground: React.FC<
 
         {/* Blob 2 */}
         <div
-          className="absolute rounded-full opacity-25 blur-2xl transition-all duration-3000 ease-out"
+          className={`absolute rounded-full blur-2xl transition-all duration-3000 ease-out ${
+            darkMode ? "opacity-25" : "opacity-50"
+          }`}
           style={{
-            width: "50vw",
-            height: "30vw",
-            background: `radial-gradient(ellipse, ${colors.primary} 0%, transparent 70%)`,
+            width: "45vw",
+            height: "45vw",
+            background: `radial-gradient(circle, ${colors.primary} 0%, transparent 70%)`,
             right: `${10 + mouseY * 15}%`,
             top: `${30 + scrollProgress * 40}%`,
             transform: `scale(${blob2Scale}) rotate(${-scrollProgress * 180}deg)`,
@@ -117,7 +121,9 @@ export const ScrollInteractiveBackground: React.FC<
 
         {/* Blob 3 */}
         <div
-          className="absolute rounded-full opacity-20 blur-xl transition-all duration-2500 ease-out"
+          className={`absolute rounded-full blur-xl transition-all duration-2500 ease-out ${
+            darkMode ? "opacity-20" : "opacity-40"
+          }`}
           style={{
             width: "35vw",
             height: "35vw",
