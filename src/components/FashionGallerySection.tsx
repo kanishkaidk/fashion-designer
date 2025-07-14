@@ -112,12 +112,12 @@ export const FashionGallerySection: React.FC<FashionGalleryProps> = ({ darkMode 
           <div className="flex justify-center mb-4">
             <Sparkles className={`w-8 h-8 ${darkMode ? 'text-pink-400' : 'text-pink-600'} animate-pulse`} />
           </div>
-          <h2 className={`font-title font-bold text-3xl md:text-4xl mb-4 ${
+          <h2 className={`font-space-grotesk font-bold text-3xl md:text-4xl mb-4 ${
             darkMode ? 'text-white' : 'text-gray-800'
           }`}>
             Fashion Inspiration Gallery
           </h2>
-          <p className={`text-lg max-w-2xl mx-auto ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+          <p className={`font-main text-lg max-w-2xl mx-auto ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
             Discover stunning AI-generated designs and get inspired for your next creation
           </p>
         </div>
@@ -192,7 +192,7 @@ export const FashionGallerySection: React.FC<FashionGalleryProps> = ({ darkMode 
 
               {/* Design Info */}
               <div className="space-y-3">
-                <h3 className={`font-bold text-xl ${
+                <h3 className={`font-main font-bold text-xl ${
                   darkMode ? 'text-white' : 'text-gray-800'
                 }`}>
                   {design.title}
@@ -225,14 +225,14 @@ export const FashionGallerySection: React.FC<FashionGalleryProps> = ({ darkMode 
                 </div>
 
                 {/* Description */}
-                <p className={`text-sm ${
+                <p className={`font-main text-sm ${
                   darkMode ? 'text-gray-300' : 'text-gray-600'
                 }`}>
                   {design.description}
                 </p>
 
                 {/* Quirky Caption */}
-                <p className={`text-xs italic font-medium ${
+                <p className={`font-main text-xs italic font-medium ${
                   darkMode ? 'text-pink-300' : 'text-pink-600'
                 }`}>
                   "{design.caption}"
@@ -240,7 +240,7 @@ export const FashionGallerySection: React.FC<FashionGalleryProps> = ({ darkMode 
 
                 {/* Action Button */}
                 <button
-                  className={`w-full py-3 rounded-2xl font-semibold transition-all duration-300 hover-scale ${
+                  className={`font-main w-full py-3 rounded-2xl font-semibold transition-all duration-300 hover-scale ${
                     darkMode 
                       ? 'bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white' 
                       : 'bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white'
@@ -258,19 +258,19 @@ export const FashionGallerySection: React.FC<FashionGalleryProps> = ({ darkMode 
           <div className={`${
             darkMode ? 'glassmorphism-dark' : 'glassmorphism'
           } rounded-3xl p-8 max-w-2xl mx-auto`}>
-            <h3 className={`font-bold text-2xl mb-4 ${
+            <h3 className={`font-main font-bold text-2xl mb-4 ${
               darkMode ? 'text-white' : 'text-gray-800'
             }`}>
               Ready to Create Your Own? ✨
             </h3>
-            <p className={`text-lg mb-6 ${
+            <p className={`font-main text-lg mb-6 ${
               darkMode ? 'text-gray-300' : 'text-gray-600'
             }`}>
               Let AI bring your fashion dreams to life with personalized designs
             </p>
             <button
               onClick={() => document.getElementById('create')?.scrollIntoView({ behavior: 'smooth' })}
-              className="neon-button px-8 py-4 rounded-full text-lg font-semibold ripple hover-scale"
+              className="neon-button px-8 py-4 rounded-full text-lg font-semibold ripple hover-scale font-main"
             >
               ✨ Start Creating Magic
             </button>

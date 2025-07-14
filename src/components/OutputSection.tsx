@@ -189,27 +189,70 @@ export const OutputSection: React.FC<OutputSectionProps> = ({
                 <div className={`p-4 rounded-2xl ${
                   darkMode ? 'bg-purple-900/30' : 'bg-pink-50'
                 }`}>
-                  <div className="space-y-2 mb-3">
-                    {design.specs.upperWear && design.specs.upperWear.length > 0 && (
-                      <p className={`font-main text-sm ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-                        <strong className={darkMode ? 'text-pink-300' : 'text-pink-600'}>Upper:</strong> {design.specs.upperWear.join(', ')}
-                      </p>
-                    )}
-                    {design.specs.lowerWear && design.specs.lowerWear.length > 0 && (
-                      <p className={`font-main text-sm ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-                        <strong className={darkMode ? 'text-pink-300' : 'text-pink-600'}>Lower:</strong> {design.specs.lowerWear.join(', ')}
-                      </p>
-                    )}
-                    {design.specs.shoes && design.specs.shoes.length > 0 && (
-                      <p className={`font-main text-sm ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-                        <strong className={darkMode ? 'text-pink-300' : 'text-pink-600'}>Shoes:</strong> {design.specs.shoes.join(', ')}
-                      </p>
-                    )}
-                    {design.specs.hairstyle && (
-                      <p className={`font-main text-sm ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-                        <strong className={darkMode ? 'text-pink-300' : 'text-pink-600'}>Hair:</strong> {design.specs.hairstyle}
-                      </p>
-                    )}
+                  {/* Detailed Breakdown */}
+                  {design.specs.detailedBreakdown && (
+                    <div className="space-y-3 mb-4">
+                      <h4 className={`font-main font-semibold text-sm ${
+                        darkMode ? 'text-pink-300' : 'text-pink-600'
+                      }`}>
+                        ✨ Complete Look Breakdown
+                      </h4>
+                      <div className="grid grid-cols-1 gap-2 text-xs">
+                        {design.specs.detailedBreakdown.upperWear && (
+                          <div className={`flex justify-between ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                            <span className="font-medium">Upper:</span>
+                            <span>{design.specs.detailedBreakdown.upperWear}</span>
+                          </div>
+                        )}
+                        {design.specs.detailedBreakdown.lowerWear && (
+                          <div className={`flex justify-between ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                            <span className="font-medium">Lower:</span>
+                            <span>{design.specs.detailedBreakdown.lowerWear}</span>
+                          </div>
+                        )}
+                        {design.specs.detailedBreakdown.shoes && (
+                          <div className={`flex justify-between ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                            <span className="font-medium">Shoes:</span>
+                            <span>{design.specs.detailedBreakdown.shoes}</span>
+                          </div>
+                        )}
+                        {design.specs.detailedBreakdown.hairstyle && (
+                          <div className={`flex justify-between ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                            <span className="font-medium">Hair:</span>
+                            <span>{design.specs.detailedBreakdown.hairstyle}</span>
+                          </div>
+                        )}
+                        {design.specs.detailedBreakdown.accessories && (
+                          <div className={`flex justify-between ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                            <span className="font-medium">Accessories:</span>
+                            <span>{design.specs.detailedBreakdown.accessories}</span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  )}
+                  
+                  {/* Enhanced Details */}
+                  {design.specs.detailedBreakdown && (
+                    <div className="space-y-2 mb-3 text-xs">
+                      <div className={`p-2 rounded-lg ${darkMode ? 'bg-gray-800/50' : 'bg-white/50'}`}>
+                        <p className={`${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                          <strong className={darkMode ? 'text-purple-300' : 'text-purple-600'}>Color Story:</strong> {design.specs.detailedBreakdown.colorPalette}
+                        </p>
+                      </div>
+                      <div className={`p-2 rounded-lg ${darkMode ? 'bg-gray-800/50' : 'bg-white/50'}`}>
+                        <p className={`${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                          <strong className={darkMode ? 'text-purple-300' : 'text-purple-600'}>Fabric Notes:</strong> {design.specs.detailedBreakdown.fabricDetails}
+                        </p>
+                      </div>
+                      <div className={`p-2 rounded-lg ${darkMode ? 'bg-gray-800/50' : 'bg-white/50'}`}>
+                        <p className={`${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                          <strong className={darkMode ? 'text-purple-300' : 'text-purple-600'}>Perfect For:</strong> {design.specs.detailedBreakdown.occasionFit}
+                        </p>
+                      </div>
+                    </div>
+                  )}
+                  
                   </div>
                   <p className={`font-main text-sm font-semibold mb-2 ${
                     darkMode ? 'text-pink-300' : 'text-pink-600'

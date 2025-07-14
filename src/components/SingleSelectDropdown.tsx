@@ -7,7 +7,6 @@ interface SingleSelectDropdownProps {
   onChange: (value: string) => void;
   placeholder: string;
   label: string;
-  icon?: string;
   darkMode: boolean;
   allowCustom?: boolean;
   required?: boolean;
@@ -19,7 +18,6 @@ export const SingleSelectDropdown: React.FC<SingleSelectDropdownProps> = ({
   onChange,
   placeholder,
   label,
-  icon,
   darkMode,
   allowCustom = true,
   required = false
@@ -66,7 +64,6 @@ export const SingleSelectDropdown: React.FC<SingleSelectDropdownProps> = ({
       <label className={`font-main block text-sm font-semibold mb-2 ${
         darkMode ? 'text-gray-200' : 'text-gray-700'
       }`}>
-        {icon && <span className="mr-1">{icon}</span>}
         {label}
         {required && <span className="text-pink-500 ml-1">*</span>}
       </label>
@@ -115,7 +112,9 @@ export const SingleSelectDropdown: React.FC<SingleSelectDropdownProps> = ({
                 type="button"
                 className={`w-full text-left p-3 border-b border-gray-100 dark:border-gray-700 bg-gradient-to-r from-pink-50 to-purple-50 dark:from-pink-900/20 dark:to-purple-900/20 hover:from-pink-100 hover:to-purple-100 dark:hover:from-pink-900/30 dark:hover:to-purple-900/30 transition-colors font-main ${
                   darkMode ? 'text-white' : 'text-gray-800'
-                }`}
+                } ${value === option ? 'bg-pink-50 dark:bg-pink-900/20 border-l-4 border-pink-500' : ''} hover:border-l-4 ${
+                  darkMode ? 'hover:border-pink-400' : 'hover:border-pink-500'
+                } transition-all`}
                 onClick={() => handleSelect(searchTerm)}
               >
                 Add "{searchTerm}"

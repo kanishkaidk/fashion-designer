@@ -12,7 +12,6 @@ interface MultiSelectDropdownProps {
   onChange: (values: string[]) => void;
   placeholder: string;
   label: string;
-  icon?: string;
   darkMode: boolean;
   allowCustom?: boolean;
   maxHeight?: string;
@@ -24,7 +23,6 @@ export const MultiSelectDropdown: React.FC<MultiSelectDropdownProps> = ({
   onChange,
   placeholder,
   label,
-  icon,
   darkMode,
   allowCustom = true,
   maxHeight = "200px"
@@ -88,7 +86,6 @@ export const MultiSelectDropdown: React.FC<MultiSelectDropdownProps> = ({
       <label className={`font-main block text-sm font-semibold mb-2 ${
         darkMode ? 'text-gray-200' : 'text-gray-700'
       }`}>
-        {icon && <span className="mr-1">{icon}</span>}
         {label}
       </label>
 
@@ -183,7 +180,9 @@ export const MultiSelectDropdown: React.FC<MultiSelectDropdownProps> = ({
                   type="button"
                   className={`w-full text-left p-3 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors font-main ${
                     darkMode ? 'text-white' : 'text-gray-800'
-                  } hover:border-l-4 hover:border-pink-400 transition-all`}
+                  } hover:border-l-4 ${
+                    darkMode ? 'hover:border-pink-400' : 'hover:border-pink-500'
+                  } transition-all`}
                   onClick={() => handleSelect(option)}
                 >
                   {option}
