@@ -243,7 +243,12 @@ function App() {
       <CursorTrail darkMode={darkMode} />
       <ChatbotIntro darkMode={darkMode} />
 
-      <Header darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
+      <Header
+        darkMode={darkMode}
+        toggleDarkMode={toggleDarkMode}
+        onShowGallery={() => setShowGallery(true)}
+        hasDesigns={designHistory.length > 0}
+      />
 
       <main className="relative z-10">
         <HeroSection darkMode={darkMode} />
