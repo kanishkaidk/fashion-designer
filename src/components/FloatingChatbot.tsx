@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { MessageCircle, X, Send, Wand2 } from 'lucide-react';
+import React, { useState } from "react";
+import { MessageCircle, X, Send, Wand2 } from "lucide-react";
 
 interface FloatingChatbotProps {
   darkMode: boolean;
@@ -12,16 +12,18 @@ interface ChatMessage {
   imageUrl?: string;
 }
 
-export const FloatingChatbot: React.FC<FloatingChatbotProps> = ({ darkMode }) => {
+export const FloatingChatbot: React.FC<FloatingChatbotProps> = ({
+  darkMode,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       text: "Hey gorgeous! 💅 I'm your AI fashion stylist. Describe your vibe and I can create a custom look for you! Try saying something like 'I want a cozy fall outfit' or 'create a glamorous evening look'",
       isBot: true,
-      timestamp: new Date()
-    }
+      timestamp: new Date(),
+    },
   ]);
-  const [inputText, setInputText] = useState('');
+  const [inputText, setInputText] = useState("");
   const [isTyping, setIsTyping] = useState(false);
 
   const fashionResponses = [
@@ -31,31 +33,30 @@ export const FloatingChatbot: React.FC<FloatingChatbotProps> = ({ darkMode }) =>
     "YES! That's such a mood! 💖 Let me work my fashion magic...",
     "Girl, you have such great taste! ✨ Bringing your vision to life...",
     "That's giving me serious fashion week vibes! 🎀 Creating something runway-worthy...",
-    "Obsessed with this direction! 💅 Designing your dream outfit now..."
+    "Obsessed with this direction! 💅 Designing your dream outfit now...",
   ];
 
   const BASE_URL =
-  import.meta.env.MODE === 'development'
-    ? 'http://localhost:3001'
-    : 'https://fashion-designer.onrender.com';
-
+    import.meta.env.MODE === "development"
+      ? "http://localhost:5013"
+      : "https://fashion-designer.onrender.com";
 
   const generateFashionImage = async (userPrompt: string) => {
     try {
       const response = await fetch(`${BASE_URL}/api/generate`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           prompt: userPrompt,
-          style: 'Casual',
-          fabric: 'Cotton',
-          colorTheme: 'Pastel',
-          mainColor: '#ec4899',
-          modelSize: 'M',
-          length: 'Midi',
-          mood: 'Romantic',
-          season: 'Spring',
-          accessory: 'Jewelry'
+          style: "Casual",
+          fabric: "Cotton",
+          colorTheme: "Pastel",
+          mainColor: "#ec4899",
+          modelSize: "M",
+          length: "Midi",
+          mood: "Romantic",
+          season: "Spring",
+          accessory: "Jewelry",
         }),
       });
 
@@ -66,65 +67,67 @@ export const FloatingChatbot: React.FC<FloatingChatbotProps> = ({ darkMode }) =>
         }
       }
     } catch (error) {
-      console.error('Error generating fashion image:', error);
+      console.error("Error generating fashion image:", error);
     }
     return null;
   };
 
   const handleSendMessage = async () => {
-  if (!inputText.trim()) return;
+    if (!inputText.trim()) return;
 
-  const userMessage: ChatMessage = {
-    text: inputText,
-    isBot: false,
-    timestamp: new Date()
-  };
-
-  setMessages(prev => [...prev, userMessage]);
-  const currentInput = inputText;
-  setInputText('');
-  setIsTyping(true);
-
-  setTimeout(async () => {
-    let imageUrl = null;
-
-    // Check if it's fashion-related
-    const isFashionRequest = /create|design|make|outfit|look|dress|style|fashion|wear/i.test(currentInput);
-    if (isFashionRequest) {
-      imageUrl = await generateFashionImage(currentInput);
-    }
-
-    let botText = "Give me a sec, working on it! ✨";
-
-    // Get GPT-style response
-    try {
-      const res = await fetch(`${BASE_URL}/api/chat`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: currentInput }),
-      });
-      const data = await res.json();
-      botText = data.reply || "Hmm, something went off — try again?";
-    } catch (err) {
-      botText = "Oops! I'm having a fashion crisis 💔 Try again later.";
-      console.error(err);
-    }
-
-    const botMessage: ChatMessage = {
-      text: botText,
-      isBot: true,
+    const userMessage: ChatMessage = {
+      text: inputText,
+      isBot: false,
       timestamp: new Date(),
-      imageUrl: imageUrl || undefined
     };
 
-    setMessages(prev => [...prev, botMessage]);
-    setIsTyping(false);
-  }, 1500);
-};
+    setMessages((prev) => [...prev, userMessage]);
+    const currentInput = inputText;
+    setInputText("");
+    setIsTyping(true);
 
+    setTimeout(async () => {
+      let imageUrl = null;
+
+      // Check if it's fashion-related
+      const isFashionRequest =
+        /create|design|make|outfit|look|dress|style|fashion|wear/i.test(
+          currentInput,
+        );
+      if (isFashionRequest) {
+        imageUrl = await generateFashionImage(currentInput);
+      }
+
+      let botText = "Give me a sec, working on it! ✨";
+
+      // Get GPT-style response
+      try {
+        const res = await fetch(`${BASE_URL}/api/chat`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message: currentInput }),
+        });
+        const data = await res.json();
+        botText = data.reply || "Hmm, something went off — try again?";
+      } catch (err) {
+        botText = "Oops! I'm having a fashion crisis 💔 Try again later.";
+        console.error(err);
+      }
+
+      const botMessage: ChatMessage = {
+        text: botText,
+        isBot: true,
+        timestamp: new Date(),
+        imageUrl: imageUrl || undefined,
+      };
+
+      setMessages((prev) => [...prev, botMessage]);
+      setIsTyping(false);
+    }, 1500);
+  };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
+    if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       handleSendMessage();
     }
@@ -134,78 +137,94 @@ export const FloatingChatbot: React.FC<FloatingChatbotProps> = ({ darkMode }) =>
     <>
       {/* Chat Button */}
       <div className="fixed bottom-6 right-6 z-50">
-        <button
-          onClick={() => setIsOpen(!isOpen)}
-          className="chatbot-bubble"
-        >
-          {isOpen ? <X className="w-6 h-6" /> : <MessageCircle className="w-6 h-6" />}
+        <button onClick={() => setIsOpen(!isOpen)} className="chatbot-bubble">
+          {isOpen ? (
+            <X className="w-6 h-6" />
+          ) : (
+            <MessageCircle className="w-6 h-6" />
+          )}
         </button>
       </div>
 
       {/* Chat Modal */}
       {isOpen && (
         <div className="fixed bottom-0 right-0 w-full sm:w-[400px] h-screen z-50">
-          <div className={`${
-            darkMode ? 'glassmorphism-dark' : 'glassmorphism'
-          } rounded-3xl h-full flex flex-col overflow-hidden shadow-2xl border-2 ${
-            darkMode ? 'border-pink-500/20' : 'border-pink-200/50'
-          }`}>
+          <div
+            className={`${
+              darkMode ? "glassmorphism-dark" : "glassmorphism"
+            } rounded-3xl h-full flex flex-col overflow-hidden shadow-2xl border-2 ${
+              darkMode ? "border-pink-500/20" : "border-pink-200/50"
+            }`}
+          >
             {/* Header */}
-<div className={`p-4 border-b ${darkMode ? 'border-gray-600' : 'border-gray-200'} flex items-center justify-between`}>
-  <div className="flex items-center gap-3">
-    <div className="w-8 h-8 bg-gradient-to-r from-pink-500 to-purple-500 rounded-full flex items-center justify-center">
-      <Wand2 className="w-4 h-4 text-white" />
-    </div>
-    <div>
-      <h3 className={`font-quirky font-semibold ${darkMode ? 'text-white' : 'text-gray-800'}`}>FashionBot AI</h3>
-      <p className={`font-quirky text-xs ${darkMode ? 'text-gray-300' : 'text-gray-500'}`}>Your AI stylist</p>
-    </div>
-  </div>
+            <div
+              className={`p-4 border-b ${darkMode ? "border-gray-600" : "border-gray-200"} flex items-center justify-between`}
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 bg-gradient-to-r from-pink-500 to-purple-500 rounded-full flex items-center justify-center">
+                  <Wand2 className="w-4 h-4 text-white" />
+                </div>
+                <div>
+                  <h3
+                    className={`font-quirky font-semibold ${darkMode ? "text-white" : "text-gray-800"}`}
+                  >
+                    FashionBot AI
+                  </h3>
+                  <p
+                    className={`font-quirky text-xs ${darkMode ? "text-gray-300" : "text-gray-500"}`}
+                  >
+                    Your AI stylist
+                  </p>
+                </div>
+              </div>
 
-  {/* Close Button */}
-  <button
-    onClick={() => setIsOpen(false)}
-    className="hover:scale-110 transition-transform"
-    aria-label="Close chatbot"
-  >
-    <X className={`w-5 h-5 ${darkMode ? 'text-white' : 'text-gray-700'}`} />
-  </button>
-</div>
-
+              {/* Close Button */}
+              <button
+                onClick={() => setIsOpen(false)}
+                className="hover:scale-110 transition-transform"
+                aria-label="Close chatbot"
+              >
+                <X
+                  className={`w-5 h-5 ${darkMode ? "text-white" : "text-gray-700"}`}
+                />
+              </button>
+            </div>
 
             {/* Messages */}
             <div className="flex-1 overflow-y-auto p-4 space-y-4">
               {messages.map((message, index) => (
                 <div
                   key={index}
-                  className={`flex ${message.isBot ? 'justify-start' : 'justify-end'}`}
+                  className={`flex ${message.isBot ? "justify-start" : "justify-end"}`}
                 >
                   <div
                     className={`max-w-xs px-4 py-2 rounded-2xl ${
                       message.isBot
                         ? darkMode
-                          ? 'bg-purple-600 text-white'
-                          : 'bg-pink-100 text-gray-800'
-                        : 'bg-gradient-to-r from-pink-500 to-purple-500 text-white'
+                          ? "bg-purple-600 text-white"
+                          : "bg-pink-100 text-gray-800"
+                        : "bg-gradient-to-r from-pink-500 to-purple-500 text-white"
                     }`}
                   >
                     <p className="font-quirky text-sm">{message.text}</p>
                     {message.imageUrl && (
-                      <img 
-                        src={message.imageUrl} 
-                        alt="Generated fashion design" 
+                      <img
+                        src={message.imageUrl}
+                        alt="Generated fashion design"
                         className="mt-2 rounded-lg w-full h-32 object-cover"
                       />
                     )}
                   </div>
                 </div>
               ))}
-              
+
               {isTyping && (
                 <div className="flex justify-start">
-                  <div className={`px-4 py-2 rounded-2xl ${
-                    darkMode ? 'bg-purple-600' : 'bg-pink-100'
-                  }`}>
+                  <div
+                    className={`px-4 py-2 rounded-2xl ${
+                      darkMode ? "bg-purple-600" : "bg-pink-100"
+                    }`}
+                  >
                     <div className="typing-indicator">
                       <div className="typing-dot"></div>
                       <div className="typing-dot"></div>
@@ -217,9 +236,11 @@ export const FloatingChatbot: React.FC<FloatingChatbotProps> = ({ darkMode }) =>
             </div>
 
             {/* Input */}
-            <div className={`p-4 border-t ${
-              darkMode ? 'border-gray-600' : 'border-gray-200'
-            }`}>
+            <div
+              className={`p-4 border-t ${
+                darkMode ? "border-gray-600" : "border-gray-200"
+              }`}
+            >
               <div className="flex gap-2">
                 <input
                   type="text"
