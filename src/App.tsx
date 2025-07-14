@@ -208,13 +208,8 @@ function App() {
   };
 
   return (
-    <div
-      className={`min-h-screen transition-all duration-500 ${
-        darkMode
-          ? "bg-gradient-to-br from-purple-900 via-pink-900 to-indigo-900"
-          : "bg-gradient-to-br from-pink-50 via-purple-50 to-indigo-50"
-      }`}
-    >
+    <div className="min-h-screen relative">
+      <ScrollInteractiveBackground darkMode={darkMode} />
       <ParticleBackground darkMode={darkMode} />
       <InteractiveBackground darkMode={darkMode} />
       <CursorTrail darkMode={darkMode} />
