@@ -207,7 +207,7 @@ app.post('/api/chat', async (req, res) => {
 app.use(express.static(path.join(__dirname, 'dist')));
 
 // Fallback to index.html for SPA
-app.get('*', (_, res) => {
+app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 

@@ -34,9 +34,15 @@ export const FloatingChatbot: React.FC<FloatingChatbotProps> = ({ darkMode }) =>
     "Obsessed with this direction! 💅 Designing your dream outfit now..."
   ];
 
+  const BASE_URL =
+  import.meta.env.MODE === 'development'
+    ? 'http://localhost:3001'
+    : 'https://fashion-designer.onrender.com';
+
+
   const generateFashionImage = async (userPrompt: string) => {
     try {
-      const response = await fetch('http://localhost:3001/api/generate', {
+      const response = await fetch(`${BASE_URL}/api/generate`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -92,7 +98,7 @@ export const FloatingChatbot: React.FC<FloatingChatbotProps> = ({ darkMode }) =>
 
     // Get GPT-style response
     try {
-      const res = await fetch("http://localhost:3001/api/chat", {
+      const res = await fetch(`${BASE_URL}/api/chat`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: currentInput }),

@@ -105,12 +105,18 @@ function App() {
     return tips[Math.floor(Math.random() * tips.length)];
   };
 
+  const BASE_URL =
+  import.meta.env.MODE === 'development'
+    ? 'http://localhost:3001'
+    : 'https://fashion-designer.onrender.com';
+
+
   const handleGenerateDesign = async (formData: any) => {
     setLoading(true);
     try {
       // Generate 3 designs by calling the API 3 times
       const designPromises = Array(3).fill(null).map(async (_, index) => {
-        const res = await fetch('http://localhost:3001/api/generate', {
+        const res = await fetch(`${BASE_URL}/api/generate`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
