@@ -54,10 +54,18 @@ export const Header: React.FC<HeaderProps> = ({
             >
               Create
             </a>
+            <a
+              href="#gallery"
+              className={`hover:text-pink-500 transition-colors ${
+                darkMode ? "text-gray-300" : "text-gray-600"
+              }`}
+            >
+              Gallery
+            </a>
             <button
               onClick={onShowGallery}
               disabled={!hasDesigns}
-              className={`flex items-center gap-2 px-4 py-2 rounded-full transition-all duration-300 ${
+              className={`flex items-center gap-2 px-3 py-2 rounded-full transition-all duration-300 ${
                 hasDesigns
                   ? darkMode
                     ? "bg-purple-600/80 hover:bg-purple-600 text-white backdrop-blur-sm"
@@ -65,11 +73,13 @@ export const Header: React.FC<HeaderProps> = ({
                   : "opacity-50 cursor-not-allowed text-gray-400"
               } hover-scale`}
               title={
-                hasDesigns ? "Open Gallery" : "Create designs to view gallery"
+                hasDesigns
+                  ? "Open My Designs"
+                  : "Create designs to view your gallery"
               }
             >
               <GalleryVertical className="w-4 h-4" />
-              Gallery
+              My Designs
               {hasDesigns && (
                 <span
                   className={`ml-1 px-2 py-0.5 rounded-full text-xs font-semibold ${
