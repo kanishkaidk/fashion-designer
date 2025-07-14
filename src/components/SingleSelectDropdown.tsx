@@ -88,11 +88,11 @@ export const SingleSelectDropdown: React.FC<SingleSelectDropdownProps> = ({
       </div>
 
       {isOpen && (
-        <div className={`absolute z-50 w-full mt-1 rounded-xl shadow-2xl border max-h-64 overflow-hidden ${
+        <div className={`absolute z-50 w-full mt-1 rounded-xl shadow-2xl border ${
           darkMode 
             ? 'bg-gray-800 border-gray-600' 
             : 'bg-white border-gray-200'
-        }`}>
+        } max-h-72 overflow-hidden`}>
           <div className="p-3 border-b border-gray-200 dark:border-gray-600">
             <input
               type="text"
@@ -109,7 +109,7 @@ export const SingleSelectDropdown: React.FC<SingleSelectDropdownProps> = ({
             />
           </div>
 
-          <div className="max-h-40 overflow-y-auto">
+          <div className="max-h-48 overflow-y-auto scrollbar-thin scrollbar-thumb-pink-300 scrollbar-track-gray-100">
             {allowCustom && searchTerm && !options.includes(searchTerm) && (
               <button
                 type="button"
@@ -135,7 +135,7 @@ export const SingleSelectDropdown: React.FC<SingleSelectDropdownProps> = ({
                   type="button"
                   className={`w-full text-left p-3 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors font-main ${
                     darkMode ? 'text-white' : 'text-gray-800'
-                  } ${value === option ? 'bg-pink-50 dark:bg-pink-900/20' : ''}`}
+                  } ${value === option ? 'bg-pink-50 dark:bg-pink-900/20 border-l-4 border-pink-500' : ''}`}
                   onClick={() => handleSelect(option)}
                 >
                   {option}

@@ -15,7 +15,12 @@ export const OutputSection: React.FC<OutputSectionProps> = ({
 }) => {
   const downloadImage = async (imageUrl: string) => {
     try {
-      const response = await fetch(imageUrl);
+      const response = await fetch(imageUrl, {
+        mode: 'cors',
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+        },
+      });
       const blob = await response.blob();
       const url = window.URL.createObjectURL(blob);
       const link = document.createElement('a');
@@ -27,7 +32,8 @@ export const OutputSection: React.FC<OutputSectionProps> = ({
       window.URL.revokeObjectURL(url);
     } catch (error) {
       console.error('Download failed:', error);
-      alert('Download failed. Please try again.');
+      // Fallback: open image in new tab
+      window.open(imageUrl, '_blank');
     }
   };
 

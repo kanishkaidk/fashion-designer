@@ -10,6 +10,9 @@ import { FloatingChatbot } from './components/FloatingChatbot';
 import { ParticleBackground } from './components/ParticleBackground';
 import { CursorTrail } from './components/CursorTrail';
 import { Gallery } from './components/Gallery';
+import { InteractiveBackground } from './components/InteractiveBackground';
+import { ChatbotIntro } from './components/ChatbotIntro';
+import { FashionGallerySection } from './components/FashionGallerySection';
 import { useDarkMode } from './hooks/useDarkMode';
 import { useDesignHistory } from './hooks/useDesignHistory';
 import './App.css';
@@ -192,7 +195,9 @@ function App() {
         : 'bg-gradient-to-br from-pink-50 via-purple-50 to-indigo-50'
     }`}>
       <ParticleBackground darkMode={darkMode} />
+      <InteractiveBackground darkMode={darkMode} />
       <CursorTrail darkMode={darkMode} />
+      <ChatbotIntro darkMode={darkMode} />
       
       <Header darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
       
@@ -210,6 +215,7 @@ function App() {
             onShowHistory={() => setShowGallery(true)}
           />
         )}
+        <FashionGallerySection darkMode={darkMode} />
         <FashionTipCarousel darkMode={darkMode} />
         <AboutSection darkMode={darkMode} />
       </main>

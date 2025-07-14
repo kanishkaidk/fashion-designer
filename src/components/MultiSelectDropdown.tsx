@@ -138,7 +138,7 @@ export const MultiSelectDropdown: React.FC<MultiSelectDropdownProps> = ({
           darkMode 
             ? 'bg-gray-800 border-gray-600' 
             : 'bg-white border-gray-200'
-        }`} style={{ maxHeight }}>
+        } max-h-80 overflow-hidden`}>
           <div className="p-3 border-b border-gray-200 dark:border-gray-600">
             <input
               type="text"
@@ -169,7 +169,7 @@ export const MultiSelectDropdown: React.FC<MultiSelectDropdownProps> = ({
             )}
           </div>
 
-          <div className="max-h-40 overflow-y-auto">
+          <div className="max-h-52 overflow-y-auto scrollbar-thin scrollbar-thumb-pink-300 scrollbar-track-gray-100">
             {filteredOptions.length === 0 && !customInput ? (
               <div className={`p-3 text-center ${
                 darkMode ? 'text-gray-400' : 'text-gray-500'
@@ -183,7 +183,7 @@ export const MultiSelectDropdown: React.FC<MultiSelectDropdownProps> = ({
                   type="button"
                   className={`w-full text-left p-3 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors font-main ${
                     darkMode ? 'text-white' : 'text-gray-800'
-                  }`}
+                  } hover:border-l-4 hover:border-pink-400 transition-all`}
                   onClick={() => handleSelect(option)}
                 >
                   {option}

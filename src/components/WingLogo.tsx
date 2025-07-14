@@ -7,7 +7,7 @@ interface WingLogoProps {
 
 export const WingLogo: React.FC<WingLogoProps> = ({ darkMode, size = 80 }) => {
   return (
-    <div className="relative animate-float">
+    <div className="relative animate-float" style={{ marginTop: '20px' }}>
       <svg
         width={size}
         height={size}

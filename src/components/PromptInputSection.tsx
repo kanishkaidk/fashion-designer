@@ -210,7 +210,7 @@ export const PromptInputSection: React.FC<PromptInputSectionProps> = ({
               options={styleOptions}
               placeholder="What's your style vibe?"
               label="✨ Style"
-              icon="👗"
+              icon="✨"
               darkMode={darkMode}
               required={true}
             />
@@ -221,7 +221,7 @@ export const PromptInputSection: React.FC<PromptInputSectionProps> = ({
               options={moods}
               placeholder="What energy are you channeling?"
               label="💫 Mood"
-              icon="✨"
+              icon="💫"
               darkMode={darkMode}
               required={true}
             />
@@ -232,7 +232,7 @@ export const PromptInputSection: React.FC<PromptInputSectionProps> = ({
               options={seasons}
               placeholder="When will you slay?"
               label="🌸 Season"
-              icon="🌿"
+              icon="🌸"
               darkMode={darkMode}
             />
           </div>
@@ -245,7 +245,7 @@ export const PromptInputSection: React.FC<PromptInputSectionProps> = ({
               options={fabricOptions}
               placeholder="Choose your dream fabrics..."
               label="🧵 Fabrics & Materials"
-              icon="🧵"
+              icon="🪡"
               darkMode={darkMode}
             />
           </div>
@@ -258,7 +258,7 @@ export const PromptInputSection: React.FC<PromptInputSectionProps> = ({
               options={colorThemes}
               placeholder="What's your color story?"
               label="🎨 Color Theme"
-              icon="🎨"
+              icon="🌈"
               darkMode={darkMode}
             />
 
@@ -292,7 +292,7 @@ export const PromptInputSection: React.FC<PromptInputSectionProps> = ({
               options={modelSizes}
               placeholder="What size fits perfectly?"
               label="📏 Size"
-              icon="📏"
+              icon="📐"
               darkMode={darkMode}
             />
 
@@ -302,7 +302,7 @@ export const PromptInputSection: React.FC<PromptInputSectionProps> = ({
               options={lengths}
               placeholder="How long should it be?"
               label="📐 Length"
-              icon="📐"
+              icon="📏"
               darkMode={darkMode}
             />
           </div>
@@ -315,7 +315,7 @@ export const PromptInputSection: React.FC<PromptInputSectionProps> = ({
               options={targetAudienceOptions}
               placeholder="Who's going to slay in this?"
               label="👥 Target Audience"
-              icon="👥"
+              icon="🎯"
               darkMode={darkMode}
             />
 
@@ -325,7 +325,7 @@ export const PromptInputSection: React.FC<PromptInputSectionProps> = ({
               options={occasionOptions}
               placeholder="Where will you wear this?"
               label="🎉 Occasion"
-              icon="🎉"
+              icon="🎊"
               darkMode={darkMode}
             />
 
@@ -335,7 +335,7 @@ export const PromptInputSection: React.FC<PromptInputSectionProps> = ({
               options={graphicPrintOptions}
               placeholder="Any cool prints?"
               label="🖼️ Graphics & Prints"
-              icon="🖼️"
+              icon="🎨"
               darkMode={darkMode}
             />
 
@@ -345,7 +345,7 @@ export const PromptInputSection: React.FC<PromptInputSectionProps> = ({
               options={patternOptions}
               placeholder="What pattern speaks to you?"
               label="✨ Pattern Details"
-              icon="✨"
+              icon="🔮"
               darkMode={darkMode}
             />
           </div>

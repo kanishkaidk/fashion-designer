@@ -40,11 +40,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ darkMode }) => {
       <div className="text-center z-10 max-w-4xl mx-auto px-4">
         <div className="animate-float mb-8">
           <div className="flex justify-center mb-6">
-            <WingLogo darkMode={darkMode} size={100} />
+            <WingLogo darkMode={darkMode} size={120} />
           </div>
           
            {/* Typing + Fade-in Title */}
-          <h1 className={`font-title font-bold text-4xl md:text-6xl lg:text-7xl mb-6 ${
+          <h1 className={`font-title font-bold text-3xl md:text-5xl lg:text-6xl mb-6 ${
             darkMode ? 'text-white' : 'text-gray-800'
           } tracking-wide text-center leading-tight`}>
             <span
@@ -55,7 +55,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ darkMode }) => {
             </span>
             <br />
             {showWithAI && (
-              <span className={`block mt-2 animate-blur-clear ${
+              <span className={`block mt-3 animate-blur-clear ${
                 darkMode ? 'text-pink-400' : 'text-purple-600'
               }`}>
                 with AI
