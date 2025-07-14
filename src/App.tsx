@@ -36,10 +36,38 @@ export interface FashionDesign {
     shoes?: string[];
     headAccessories?: string[];
     hairstyle?: string;
+    targetAudience?: string;
+    occasion?: string;
+    graphicPrint?: string;
+    pattern?: string;
     description: string;
     story: string;
     stylingTip: string;
     quirkyCaption: string;
+    detailedBreakdown?: {
+      upperWear: string;
+      lowerWear: string;
+      shoes: string;
+      accessories: string;
+      headAccessories: string;
+      hairstyle: string;
+      colorPalette: string;
+      fabricDetails: string;
+      occasionFit: string;
+      bodyTypeNotes: string;
+      seasonalContext: string;
+      moodStyling: string;
+      colorPsychology: string;
+      imageRatio: string;
+      textureNotes: string;
+    };
+    advancedStyling?: {
+      fabricTip: string;
+      moodTip: string;
+      colorPsychology: string;
+      occasionGuide: string;
+      bodyTypeNotes: string;
+    };
   };
   isBestPick: boolean;
   timestamp: Date;
