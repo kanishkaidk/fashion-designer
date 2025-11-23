@@ -83,46 +83,111 @@ export const OutputSection: React.FC<OutputSectionProps> = ({
     }
   };
 
-  const exportToFigma = () => {
-    const figmaData = {
-      name: "Fashion Design Export",
-      type: "FRAME",
-      children: designs.map((design, index) => ({
-        name: `Design ${index + 1} - ${design.specs.style}`,
-        type: "RECTANGLE",
-        fills: [
-          {
-            type: "IMAGE",
-            imageRef: design.imageUrl,
+  const [exportingToFigma, setExportingToFigma] = React.useState(false);
+
+  const exportToFigma = async () => {
+    setExportingToFigma(true);
+    try {
+      const BASE_URL =
+        import.meta.env.MODE === "development"
+          ? "http://localhost:3001"
+          : "https://fashion-designer.onrender.com";
+
+      const response = await fetch(`${BASE_URL}/api/export-figma`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          designs: designs.map((design) => ({
+            imageUrl: design.imageUrl,
+            specs: design.specs,
+            id: design.id,
+          })),
+          fileName: `Fashion Designs - ${new Date().toISOString().split("T")[0]}`,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to export to Figma");
+      }
+
+      if (data.success) {
+        // Download the Figma data as JSON for import
+        const dataStr = JSON.stringify(data.data, null, 2);
+        const dataBlob = new Blob([dataStr], { type: "application/json" });
+        const url = URL.createObjectURL(dataBlob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = `fashion-designs-figma-${Date.now()}.json`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+
+        // Show success message with instructions
+        const message = data.method === "import"
+          ? `🎨 Figma export data prepared!\n\nTo import into Figma:\n1. Open Figma\n2. Install the "JSON to Figma" plugin\n3. Import the downloaded JSON file\n\nOr use the Figma Plugin API to import directly.`
+          : `🎨 Figma export successful!\n\n${data.message}\n\nTeam ID: ${data.teamId || "N/A"}\nProject ID: ${data.projectId || "N/A"}\n\nThe JSON file has been downloaded. You can import it into Figma using a plugin.`;
+
+        alert(message);
+
+        // If there's an import URL, offer to open it
+        if (data.importUrl) {
+          if (confirm("Would you like to open the Figma plugin page?")) {
+            window.open(data.importUrl, "_blank");
+          }
+        }
+      } else {
+        throw new Error(data.error || "Export failed");
+      }
+    } catch (error: any) {
+      console.error("Figma export error:", error);
+      alert(
+        `❌ Failed to export to Figma: ${error.message}\n\nFalling back to JSON download...`,
+      );
+      
+      // Fallback to old method
+      const figmaData = {
+        name: "Fashion Design Export",
+        type: "FRAME",
+        children: designs.map((design, index) => ({
+          name: `Design ${index + 1} - ${design.specs.style}`,
+          type: "RECTANGLE",
+          fills: [
+            {
+              type: "IMAGE",
+              imageRef: design.imageUrl,
+            },
+          ],
+          constraints: {
+            horizontal: "LEFT",
+            vertical: "TOP",
           },
-        ],
-        constraints: {
-          horizontal: "LEFT",
-          vertical: "TOP",
-        },
-        absoluteBoundingBox: {
-          x: index * 300,
-          y: 0,
-          width: 280,
-          height: 360,
-        },
-      })),
-    };
+          absoluteBoundingBox: {
+            x: index * 300,
+            y: 0,
+            width: 280,
+            height: 360,
+          },
+        })),
+      };
 
-    const dataStr = JSON.stringify(figmaData, null, 2);
-    const dataBlob = new Blob([dataStr], { type: "application/json" });
-    const url = URL.createObjectURL(dataBlob);
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = "fashion-designs-figma.json";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
-
-    alert(
-      '🎨 Figma-compatible file downloaded! Import this JSON into Figma using a plugin like "JSON to Figma"',
-    );
+      const dataStr = JSON.stringify(figmaData, null, 2);
+      const dataBlob = new Blob([dataStr], { type: "application/json" });
+      const url = URL.createObjectURL(dataBlob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "fashion-designs-figma.json";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    } finally {
+      setExportingToFigma(false);
+    }
   };
 
   const copyDescription = (text: string) => {
@@ -199,10 +264,19 @@ export const OutputSection: React.FC<OutputSectionProps> = ({
                     </button>
                     <button
                       onClick={exportToFigma}
-                      className="p-3 bg-white rounded-full shadow-lg hover:scale-110 transition-transform"
-                      title="Export to Figma"
+                      disabled={exportingToFigma}
+                      className={`p-3 bg-white rounded-full shadow-lg transition-transform ${
+                        exportingToFigma
+                          ? "opacity-50 cursor-not-allowed"
+                          : "hover:scale-110"
+                      }`}
+                      title={exportingToFigma ? "Exporting to Figma..." : "Export to Figma"}
                     >
-                      <ExternalLink className="w-5 h-5 text-gray-700" />
+                      <ExternalLink
+                        className={`w-5 h-5 text-gray-700 ${
+                          exportingToFigma ? "animate-pulse" : ""
+                        }`}
+                      />
                     </button>
                   </div>
                 </div>

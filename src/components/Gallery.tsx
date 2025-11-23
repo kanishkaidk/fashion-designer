@@ -90,17 +90,26 @@ export const Gallery: React.FC<GalleryProps> = ({
     }
   };
 
-  const formatDate = (date: Date) => {
+  const formatDate = (date: Date | string) => {
+    const dateObj = date instanceof Date ? date : new Date(date);
     return new Intl.DateTimeFormat("en-US", {
       month: "short",
       day: "numeric",
       year: "numeric",
       hour: "2-digit",
       minute: "2-digit",
-    }).format(date);
+    }).format(dateObj);
   };
 
-  const filteredDesigns = designs
+  // Ensure all timestamps are Date objects
+  const normalizedDesigns = designs.map((design) => ({
+    ...design,
+    timestamp: design.timestamp instanceof Date 
+      ? design.timestamp 
+      : new Date(design.timestamp),
+  }));
+
+  const filteredDesigns = normalizedDesigns
     .filter((design) => {
       if (filterBy === "favorites") return favorites.includes(design.id);
       if (filterBy === "recent")
